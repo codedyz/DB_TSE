@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  mysqldb:
+    image: mysql
+    container_name: TSEDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=TSEDB
+    ports:
+      - 3307:3306
+
+  app:
+    image: codedy/minitrep
+    build: .
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+    ports:
+      - 3000:3000
