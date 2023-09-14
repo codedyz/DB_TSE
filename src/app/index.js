@@ -3,11 +3,14 @@ import cors from 'cors'
 import path from 'path'
 
 import indexRoutes from './routes/index.routes.js'
+import crearmodelo from './routes/crearmodelo.routes.js'
+import cargartmp from './routes/cargartmp.routes.js'
+
 import consulta1 from './routes/consulta1.routes.js'
 
 const app = express()
 const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
+export const __dirname = path.dirname(__filename);
 
 //settings
 app.set('case sensitive routing', true)
@@ -20,6 +23,9 @@ app.use(cors())
 
 //routes
 app.use(indexRoutes)
+app.use(crearmodelo)
+app.use(cargartmp)
+
 //app.use(consulta1)
 
 app.listen(3000)
