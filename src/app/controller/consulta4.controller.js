@@ -1,25 +1,22 @@
 import {pool} from '../config/db.js'
 
-export const getConsulta1 = async (req,res)=>{
+export const getConsulta4 = async (req,res)=>{
     const connection = await pool.getConnection();
 
     try { 
         const [sql] = await connection.query(`
-        SELECT 
-            P.nombre_partido AS Partido, 
-            CP.nombre AS Presidente, 
-            CV.nombre AS Vicepresidente
-        FROM 
+        SELECT
+            P.nombre_Partido AS Partido,
+            COUNT(C.id_candidato) AS No_Candidatos
+        FROM
             minitrep.partido P
-        LEFT JOIN 
-            minitrep.candidato CP 
-        ON CP.id_cargo = 1 AND P.id_partido = CP.id_partido
-        LEFT JOIN 
-            minitrep.candidato CV 
-        ON CV.id_cargo = 2 AND P.id_partido = CV.id_partido
+        LEFT JOIN
+            minitrep.candidato C
+        ON P.id_partido = C.id_partido 
         WHERE
-            CP.id_candidato IS NOT NULL
-            AND CV.id_candidato IS NOT NULL;
+            P.nombre_Partido <> 'NULO'
+        GROUP BY
+            P.nombre_Partido;
         `);
         
         const tableHtml = `
@@ -28,20 +25,18 @@ export const getConsulta1 = async (req,res)=>{
             <title>Resultados de la consulta</title>
             </head>
             <body>
-            <h1>Consulta 1</h1>
+            <h1>Consulta 4</h1>
             <table border="1">
                 <tr>
                 <th>Partido</th>
-                <th>Presidente</th>
-                <th>Vicepresidente</th>
+                <th>No_Candidato</th>
                 <!-- Agrega más encabezados según tu tabla -->
                 </tr>
                 ${sql.map((row) => {
                 return `
                     <tr>
                     <td>${row.Partido}</td>
-                    <td>${row.Presidente}</td>
-                    <td>${row.Vicepresidente}</td>
+                    <td>${row.No_Candidatos}</td>
                     <!-- Agrega más celdas según tu tabla -->
                     </tr>
                 `;
@@ -53,7 +48,6 @@ export const getConsulta1 = async (req,res)=>{
 
         res.header('Content-Type', 'text/html');
         res.send(tableHtml);
-        //res.status(200).json(sql);
 
     } catch (error) {
         console.error('Error al crear la tabla:', error);
