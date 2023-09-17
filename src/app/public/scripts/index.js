@@ -4,38 +4,36 @@ $(function () {
         {
             text: "Consultas",
             children: [
-                { text: "consulta1", icon: "jstree-file", type: "file" },
-                { text: "consulta2", icon: "jstree-file", type: "file" },
-                { text: "consulta3", icon: "jstree-file", type: "file" },
-                { text: "consulta4", icon: "jstree-file", type: "file" },
-                { text: "consulta5", icon: "jstree-file", type: "file" },
-                { text: "consulta6", icon: "jstree-file", type: "file" },
-                { text: "consulta7", icon: "jstree-file", type: "file" },
-                { text: "consulta8", icon: "jstree-file", type: "file" },
-                { text: "consulta9", icon: "jstree-file", type: "file" },
-                { text: "consulta10", icon: "jstree-file", type: "file" },
-                { text: "consulta11", icon: "jstree-file", type: "file" }
+                { text: "consulta1", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta2", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta3", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta4", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta5", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta6", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta7", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta8", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta9", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta10", icon: "jstree-file", type: "file", class: "sqlCons" },
+                { text: "consulta11", icon: "jstree-file", type: "file", class: "sqlCons" }
 
             ]
         },
         {
             text: "Operaciones",
             children: [
-                { text: "eliminartabtemp",  icon: "jstree-file", type: "file" },
-                { text: "cargartabtemp",    icon: "jstree-file", type: "file" },
-                { text: "eliminarmodelo",   icon: "jstree-file", type: "file" },
-                { text: "crearmodelo",      icon: "jstree-file", type: "file" },
-                { text: "cargarmodelo",     icon: "jstree-file", type: "file" }
+                { text: "crearmodelo",      icon: "jstree-file", type: "file", class: "sqlOper" },
+                { text: "cargartabtemp",    icon: "jstree-file", type: "file", class: "sqlOper" },
+                { text: "eliminarmodelo",   icon: "jstree-file", type: "file", class: "sqlOper" }
             ]
         },
         {
             text: "Docs",
             children: [
-                { text: "Enunciado",            icon: "jstree-file", type: "docs" },
-                { text: "Modelo Conceptual",    icon: "jstree-file", type: "docs" },
-                { text: "Modelo Fisico",        icon: "jstree-file", type: "docs" },
-                { text: "Modelo Logico",        icon: "jstree-file", type: "docs" },
-                { text: "Manual Tecnico",       icon: "jstree-file", type: "docs" }
+                { text: "Enunciado",            icon: "jstree-file", type: "docs", class: "sqlDocs" },
+                { text: "Modelo_Conceptual",    icon: "jstree-file", type: "docs", class: "sqlDocs" },
+                { text: "Modelo_Fisico",        icon: "jstree-file", type: "docs", class: "sqlDocs" },
+                { text: "Modelo_Logico",        icon: "jstree-file", type: "docs", class: "sqlDocs" },
+                { text: "Manual_Tecnico",       icon: "jstree-file", type: "docs", class: "sqlDocs" }
             ]
         }
         // Agregar más directorios y archivos aquí
@@ -64,16 +62,18 @@ $(function () {
 
     // Manejar clics en nodos de archivo
     $('#tree').on('select_node.jstree', function (e, data) {
-        const node = data.node;
-        if (node.type === 'consult' ) {
-            //window.location.href = node.text; // Redireccionar a la URL del archivo
-        console.log(node.type);
-
+        const node = data.node.original.class;
+        const new_link = data.node
+        if (node === 'sqlCons' ) {
+            window.open(new_link.text,"_blank") // Redireccionar a la URL del archivo
+            
+        }else if (node === 'sqlOper' ){
+            window.open(new_link.text,"_blank") // Redireccionar a la URL del archivo
+            
         }else{
-            
-            //window.location.href = 'docs/' + node.text+'.pdf'; // Redireccionar a la URL del archivo
-        console.log(node.type);
-            
+            //console.log(new_link.text);
+            window.open('docs/' + new_link.text+'.pdf'); // Redireccionar a la URL del archivo
+
         }
     });
 });

@@ -1,25 +1,17 @@
 import {pool} from '../config/db.js'
 
-export const getConsulta5 = async (req,res)=>{
+export const getConsulta10 = async (req,res)=>{
     const connection = await pool.getConnection();
 
     try { 
         const [sql] = await connection.query(`
-        SELECT
-            Dep.nombre AS Departamento,
-            COUNT(V.id_voto) AS No_Votos
-        FROM
-            minitrep.departamento Dep
-        LEFT JOIN
-            minitrep.mesa M
-        ON
-            Dep.id_depar = M.id_depar
-        LEFT JOIN
-            minitrep.voto V
-        ON
-            M.id_mesa = V.id_mesa
-        GROUP BY
-            Dep.nombre;
+        SELECT 
+            TIME_FORMAT(TIME(fechahora), '%H:%i') AS Hora,
+            COUNT(fechahora) AS Votantes
+        FROM minitrep.voto V
+        GROUP BY V.fechahora
+        ORDER BY Votantes DESC
+        LIMIT 5;
         `);
         
         const tableHtml = `
@@ -28,18 +20,18 @@ export const getConsulta5 = async (req,res)=>{
             <title>Resultados de la consulta</title>
             </head>
             <body>
-            <h1>Consulta 5</h1>
+            <h1>Consulta 10</h1>
             <table border="1">
                 <tr>
-                <th>Departamento</th>
-                <th>No_Votos</th>
+                <th>Hora</th>
+                <th>Votos</th>
                 <!-- Agrega más encabezados según tu tabla -->
                 </tr>
                 ${sql.map((row) => {
                 return `
                     <tr>
-                    <td>${row.Departamento}</td>
-                    <td>${row.No_Votos}</td>
+                    <td>${row.Hora}</td>
+                    <td>${row.Votantes}</td>
                     <!-- Agrega más celdas según tu tabla -->
                     </tr>
                 `;

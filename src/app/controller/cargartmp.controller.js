@@ -9,12 +9,12 @@ export const getCargartabtemp = async (req,res)=>{
 
     const csvPath = [
       path.join(__dirname, 'public', 'res/csv/departamentos.csv'),
-      path.join(__dirname, 'public', 'res/csv/mesas.csv'),
+      path.join(__dirname, 'public', 'res/csv/mesas.csv'), 
       path.join(__dirname, 'public', 'res/csv/ciudadanos.csv'), 
       path.join(__dirname, 'public', 'res/csv/candidatos.csv'),
       path.join(__dirname, 'public', 'res/csv/cargos.csv'), 
       path.join(__dirname, 'public', 'res/csv/partidos.csv'),
-      path.join(__dirname, 'public', 'res/csv/votaciones.csv')  
+      path.join(__dirname, 'public', 'res/csv/votaciones.csv')
     ]; 
 
     try { 
@@ -45,8 +45,8 @@ export const getCargartabtemp = async (req,res)=>{
       SELECT id, nombre FROM minitrep.tmpdepartamentos`);
 
       await connection.query(`INSERT INTO minitrep.mesa (id_mesa, id_depar) 
-      SELECT id_mesa, id_departamento FROM minitrep.tmpmesas`);
-
+      SELECT id_mesa, id_departamento FROM minitrep.tmpmesas`); 
+      
       await connection.query(`INSERT INTO minitrep.ciudadano (dpi,nombre,apellido,direccion,telefono,edad,genero)
       SELECT DPI, Nombre, Apellido, Direccion, Telefono, Edad, Genero FROM minitrep.tmpciudadanos`);
 
@@ -63,13 +63,7 @@ export const getCargartabtemp = async (req,res)=>{
       SELECT id, nombres, fecha_nacimiento, cargo_id, partido_id FROM minitrep.tmpcandidatos`);
 
       await connection.query(`INSERT INTO minitrep.detalle_voto (id_voto, id_candidato)
-      SELECT id_voto, id_candidato FROM minitrep.tmpvotaciones`);
-
-      /*const tempClientesData = await connection.query(`SELECT * FROM minitrep.departamento`);
-      console.log(tempClientesData);
-      await connection.query("USE minitrep")
-      const [rows] = await connection.query("SHOW TABLES");
-      console.log('Filas de tablas:', rows); */
+      SELECT id_voto, id_candidato FROM minitrep.tmpvotaciones`); 
                  
       console.log('TABLAS TEMPORALES HAN SIDO CREADAS EXITOSAMENTE Y CARGADAS AL MODELO');
 
