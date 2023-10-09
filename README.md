@@ -59,6 +59,8 @@ El servidor de la aplicación inicia en el puerto **3000** y muestra un mensaje 
 
 La aplicación se compone de 11 consultas las cuales cada una tiene un endpoint y pueden ser vistas en [script.sql](src/app/public/db.sql) ademas existen endpoint para la cración, carga y eliminación del modelo para la base de datos.
 
+Para mas información de la instrucciones que se solicitaron para la elaboración de esta aplicación puede leer el siguiente documento [doc.pdf](src/app/public/docs/Enunciado.pdf)
+
 - _Universidad de San Carlos de Guatemala_
 - _Facultad de Ingenieria_
 - _Eddy Fernando Díaz Galindo_
